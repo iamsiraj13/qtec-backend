@@ -101,7 +101,6 @@ const initializeProducts = async () => {
   }
 };
 
-initializeProducts();
 // Test route
 app.get("/", (req, res) => {
   res.send("E-Shop Backend is running!");
