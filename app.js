@@ -121,7 +121,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 // Get single product by ID
-app.get("/api/products/:id", async (req, res) => {
+app.get("/api/product/:id", async (req, res) => {
   try {
     const product = await Product.findOne({ id: parseInt(req.params.id) });
     if (!product) {
