@@ -101,6 +101,7 @@ const initializeProducts = async () => {
   }
 };
 
+initializeProducts();
 // Test route
 app.get("/", (req, res) => {
   res.send("E-Shop Backend is running!");
@@ -110,6 +111,10 @@ app.get("/", (req, res) => {
 app.get("/api/products", async (req, res) => {
   try {
     const products = await Product.find();
+    if (products.length === 0) {
+      await initializeProducts();
+      return res.json(await Product.find());
+    }
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch products" });
@@ -198,4 +203,4 @@ app.delete("/api/cart", async (req, res) => {
 });
 initializeProducts();
 // Export the Express app for Vercel
-module.exports = { app, initializeProducts };
+module.exports = app;
