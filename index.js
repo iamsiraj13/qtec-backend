@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
+// Use environment variables for PORT and MONGODB_URI (set these in Vercel dashboard)
+const PORT = process.env.PORT || 5000;
 const MONGODB_URI =
+  process.env.MONGODB_URI ||
   "mongodb+srv://iamsiraj13:iamsiraj13@cluster0.4tdkj.mongodb.net/ecommerce-task";
 
 // Middleware
@@ -98,9 +100,13 @@ async function initializeProducts() {
       },
     ];
     await Product.insertMany(initialProducts);
-    console.log("Initial products inserted");
   }
 }
+
+// Test route
+app.get("/", (req, res) => {
+  res.send("E-Shop Backend is running!");
+});
 
 // Get all products
 app.get("/api/products", async (req, res) => {
@@ -111,6 +117,7 @@ app.get("/api/products", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch products" });
   }
 });
+
 // Get single product by ID
 app.get("/api/products/:id", async (req, res) => {
   try {
@@ -123,6 +130,7 @@ app.get("/api/products/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch product" });
   }
 });
+
 // Get cart
 app.get("/api/cart", async (req, res) => {
   try {
@@ -168,6 +176,7 @@ app.put("/api/cart/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update cart" });
   }
 });
+
 // Remove from cart
 app.delete("/api/cart/:id", async (req, res) => {
   try {
@@ -190,12 +199,12 @@ app.delete("/api/cart", async (req, res) => {
   }
 });
 
-// Start server
-async function startServer() {
+// Initialize products and export the app
+async function initialize() {
   await initializeProducts();
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
 }
 
-startServer();
+initialize();
+
+// Export the Express app for Vercel
+module.exports = app;
