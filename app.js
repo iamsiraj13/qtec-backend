@@ -39,8 +39,9 @@ const Cart = mongoose.model("Cart", cartSchema);
 
 // Initialize products if collection is empty
 const initializeProducts = async () => {
-  const count = await Product.countDocuments();
-  if (count === 0) {
+  const count = await Product.find();
+
+  if (count.length <= 0) {
     const initialProducts = [
       {
         id: 1,
@@ -123,7 +124,8 @@ app.get("/api/products", async (req, res) => {
 // Get single product by ID
 app.get("/api/product/:id", async (req, res) => {
   try {
-    const product = await Product.findOne({ _id: parseInt(req.params.id) });
+    console.log(req.params.id);
+    const product = await Product.findById({ _id: req.params.id });
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
