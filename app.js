@@ -196,6 +196,6 @@ app.delete("/api/cart", async (req, res) => {
     res.status(500).json({ error: "Failed to clear cart" });
   }
 });
-
+initializeProducts();
 // Export the Express app for Vercel
 module.exports = { app, initializeProducts };
