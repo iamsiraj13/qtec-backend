@@ -123,7 +123,7 @@ app.get("/api/products", async (req, res) => {
 // Get single product by ID
 app.get("/api/product/:id", async (req, res) => {
   try {
-    const product = await Product.findOne({ id: parseInt(req.params.id) });
+    const product = await Product.findOne({ _id: parseInt(req.params.id) });
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
