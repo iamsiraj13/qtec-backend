@@ -4,7 +4,8 @@ const cors = require("cors");
 
 const app = express();
 const PORT = 5000;
-const MONGODB_URI = "mongodb://localhost:27017/ecommerce-task";
+const MONGODB_URI =
+  "mongodb+srv://iamsiraj13:iamsiraj13@cluster0.4tdkj.mongodb.net/ecommerce-task";
 
 // Middleware
 app.use(cors());
